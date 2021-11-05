@@ -14,8 +14,7 @@
     "importsNotUsedAsValues": "error",
     "inlineSources": true,
     "pretty": true,
-    "skipLibCheck": true,
-    "types": ["node"]
+    "skipLibCheck": true
   },
   "ts-node": {
     "transpileOnly": true
