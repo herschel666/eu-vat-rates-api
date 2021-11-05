@@ -20,6 +20,10 @@ const URL =
 
 const DIST = pathJoin(__dirname, 'dist');
 
+const API = pathJoin(DIST, 'api');
+
+const STATIC = pathJoin(__dirname, 'static');
+
 const COUNTRIES_TO_ABBR = {
   Austria: 'AT',
   Belgium: 'BE',
@@ -84,10 +88,25 @@ function createCountryFiles(
     const data = JSON.stringify(withTimestamp(now, country), null, 2);
 
     return fs.writeFile(
-      pathJoin(DIST, `${country.code.toLowerCase()}.json`),
+      pathJoin(API, `${country.code.toLowerCase()}.json`),
       data
     );
   });
+}
+
+function writeRedirects(
+  file: string,
+  countries: Array<Country>
+): Promise<void> {
+  const data = [
+    file,
+    ...countries.map(
+      ({ code }) =>
+        `/api/${code.toLowerCase()}    /api/${code.toLowerCase()}.json 200!`
+    ),
+  ];
+
+  return fs.writeFile(pathJoin(DIST, '_redirects'), data.join('\n'));
 }
 
 async function writeData(html: string): Promise<void> {
@@ -109,13 +128,15 @@ async function writeData(html: string): Promise<void> {
       rate: Number(rates[i]),
     })
   );
+  const redirects = await fs.readFile(pathJoin(STATIC, '_redirects'), 'utf8');
 
-  await fs.mkdir(DIST, { recursive: true });
+  await fs.mkdir(API, { recursive: true });
   await Promise.all([
     fs.writeFile(
-      pathJoin(DIST, 'all.json'),
+      pathJoin(API, 'all.json'),
       JSON.stringify(withTimestamp(now, data), null, 2)
     ),
+    writeRedirects(redirects, data),
     ...createCountryFiles(now, data),
   ]);
 }

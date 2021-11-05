@@ -2,7 +2,7 @@
   "name": "eu-vat-rates-api",
   "scripts": {
     "start": "ts-node build",
-    "poststart": "cp ./static/{_redirects,index.html} dist/",
+    "poststart": "cp ./static/index.html dist/",
     "pretest": "tsc",
     "test": "eslint build.ts"
   },
