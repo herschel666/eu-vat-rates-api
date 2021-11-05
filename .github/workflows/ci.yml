@@ -1,0 +1,46 @@
+name: Test & Build
+
+on:
+  push:
+    branches:
+      - KillYourMaster
+  pull_request:
+
+jobs:
+  test-and-buid:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+
+      - name: Cache Node dependencies
+        uses: actions/cache@v2
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm start
+
+      - name: Store data
+        uses: actions/upload-artifact@v2
+        with:
+          name: eu-vat-rates
+          path: dist
