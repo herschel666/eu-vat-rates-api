@@ -7,10 +7,51 @@
   <title>EU VAT Rates API 🇪🇺</title>
   <style>
     body {
-    background-color: #003399;
+      padding: 1em;
+      background-color: #003399;
+      font-size: 20px;
+      color: white;
+      text-shadow: 0 1px 1px black;
+    }
+
+    a { color: #FFDD00 }
+    a:hover,
+    a:focus {
+      text-decoration: none;
+    }
+
+    pre {
+      padding: 0 1em;
+      background-color: #111;
+    }
+
+    code {
+      display: block;
+      font-family: monospace;
+      color: #FFDD00;
+    }
   </style>
 </head>
 <body>
+  <h1>EU VAT Rates API</h1>
 
+  <main>
+    <p>
+      Current VAT rates fetched from
+      <a href="https://ec.europa.eu/taxation_customs/business/vat/telecommunications-broadcasting-electronic-services/vat-rates_en" target="_blank">ec.europa.eu</a>.
+    </p>
+
+    <pre><code>
+curl https://eu-vat-rates-api.netlify.app/api | jq
+    </code></pre>
+
+    <pre><code>
+curl https://eu-vat-rates-api.netlify.app/api/&lt;country code&gt; | jq
+    </code></pre>
+  </main>
+
+  <footer>
+    Built by <a href="https://twitter.com/herschel_r" target="_blank">@herschel_r</a> | <a href="https://github.com/herschel666/eu-vat-rates-api" target="_blank">Github</a>
+  </footer>
 </body>
 </html>
