@@ -36,9 +36,3 @@ jobs:
 
       - name: Build
         run: npm start
-
-      - name: Store data
-        uses: actions/upload-artifact@v2
-        with:
-          name: eu-vat-rates
-          path: dist
