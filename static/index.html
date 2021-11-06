@@ -6,10 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EU VAT Rates API 🇪🇺</title>
   <style>
+    html {
+      /* as demonstrated here: https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/#step-4 */
+      font-size: clamp(1rem, -0.875rem + 8.333vw, 3.5rem);
+    }
+
     body {
+      max-width: 19rem;
       padding: 1em;
       background-color: #003399;
-      font-size: 20px;
+      font-size: .5rem;
       color: white;
       text-shadow: 0 1px 1px black;
     }
@@ -29,6 +35,7 @@
       display: block;
       font-family: monospace;
       color: #FFDD00;
+      font-size: .33rem;
     }
   </style>
 </head>
